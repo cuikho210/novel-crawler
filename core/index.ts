@@ -1,20 +1,15 @@
 import { getAllChapterUrls, getChapter } from "../crawlers/truyencv";
 import { exportToEpub } from "../exporters/to-epub";
-import { readFileSync } from 'fs';
+import { resolve } from "path";
 import type { Chapter } from "../crawlers/types";
 
-const novelName = 'chan-nuoi-toan-nhan-loai';
-const json = readFileSync('./chapters.json', { encoding: 'utf8' });
-const chapters = JSON.parse(json as string);
+const novelName = 'tham-uyen-nu-than-vuc-sau-nu-than';
+const title = 'Thâm Uyên Nữ Thần';
+const author = 'Đằng La Vi Chi';
+const chapters = await getChapters(novelName);
+const exportPath = resolve(__dirname, novelName + '.epub');
 
-exportToEpub(
-	{
-		title: 'Chăn nuôi toàn nhân loại',
-		author: 'Cuikho210',
-		chapters,
-	},
-	'/home/cuikho210/Documents/docs/' + novelName + '.epub',
-);
+exportToEpub({ title, author, chapters, }, exportPath);
 
 export async function getChapters(novelName: string): Promise<Chapter[]> {
 	const urls = await getAllChapterUrls(novelName);
