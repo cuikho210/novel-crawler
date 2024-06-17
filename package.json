@@ -1,0 +1,23 @@
+{
+  "name": "novel-crawler",
+  "module": "main.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run core/main.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/epub-gen": "^0.1.2",
+    "@types/jsdom": "^21.1.7"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "epub-gen": "^0.1.0",
+    "jsdom": "^24.1.0"
+  },
+  "trustedDependencies": [
+    "ejs"
+  ]
+}
