@@ -3,7 +3,7 @@ import { exportToEpub } from "../exporters/to-epub";
 import { resolve } from "path";
 import type { Chapter } from "../crawlers/types";
 
-const bookId = 104000;
+const bookId = 117384;
 const bookInfo = await fetchBookData(bookId);
 const chapters = await getChapters();
 
@@ -19,8 +19,7 @@ export async function getChapters(): Promise<Chapter[]> {
 
 	for (const chap of bookInfo.data) {
 		promises.push(new Promise(async (resolve) => {
-			const uri = `/${bookInfo.extra.book.slug}/chuong-${chap.index}`;
-			const chapter = await getChapter(uri, chap.index, chap.name);
+			const chapter = await getChapter(bookInfo.extra.book.slug, chap);
 			chapters.push(chapter);
 			resolve();
 		}));
