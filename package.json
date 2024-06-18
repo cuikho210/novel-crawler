@@ -6,16 +6,20 @@
     "dev": "bun run core/main.ts"
   },
   "devDependencies": {
+    "@types/async-lock": "^1.4.2",
     "@types/bun": "latest",
     "@types/epub-gen": "^0.1.2",
-    "@types/jsdom": "^21.1.7"
+    "@types/jsdom": "^21.1.7",
+    "@types/selenium-webdriver": "^4.1.23"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "async-lock": "^1.4.1",
     "epub-gen": "^0.1.0",
-    "jsdom": "^24.1.0"
+    "jsdom": "^24.1.0",
+    "selenium-webdriver": "^4.21.0"
   },
   "trustedDependencies": [
     "ejs"
