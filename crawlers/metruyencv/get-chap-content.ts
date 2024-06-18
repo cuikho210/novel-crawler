@@ -2,6 +2,7 @@ import { HOST_CHAPTER_CONTENT, USER_AGENT } from "./config";
 import { Browser, Builder, By, until } from 'selenium-webdriver';
 import Asynclock from 'async-lock';
 import { JSDOM } from 'jsdom';
+import { cache, loadCache } from '../../core/cache';
 import type { Chapter } from '../types';
 import type { ChapterInfo } from "./list-chap";
 
@@ -78,20 +79,24 @@ function isContentCorrect(content: string, chap: ChapterInfo): boolean {
 	return true;
 }
 
-async function getChapterContent(uri: string, chap: ChapterInfo): Promise<string> {
+async function getChapterContent(slug: string, chap: ChapterInfo): Promise<string> {
+	const uri = `/${slug}/chuong-${chap.index}`;
 	const url = HOST_CHAPTER_CONTENT + uri;
-	let content = await normalFetchChapterContent(url);
+	const cacheKey = slug + '-' + chap.index;
 
+	let content = await loadCache(cacheKey);
+	if (content) return content;
+
+	content = await normalFetchChapterContent(url);
 	const isCorrect = isContentCorrect(content, chap);
-	if (isCorrect) return content;
+	if (!isCorrect) content = await seleniumFetchChapterContent(url);
 
-	content = await seleniumFetchChapterContent(url);
+	await cache(cacheKey, content);
 	return content;
 }
 
 export async function getChapter(slug: string, chap: ChapterInfo): Promise<Chapter> {
-	const uri = `/${slug}/chuong-${chap.index}`;
-	const content = await getChapterContent(uri, chap);
+	const content = await getChapterContent(slug, chap);
 
 	console.log('[getChapter] Downloaded', chap.index, chap.name);
 	return {

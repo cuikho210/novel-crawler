@@ -3,7 +3,7 @@
   "module": "main.ts",
   "type": "module",
   "scripts": {
-    "dev": "bun run core/main.ts"
+    "dev": "bun run main.ts"
   },
   "devDependencies": {
     "@types/async-lock": "^1.4.2",
