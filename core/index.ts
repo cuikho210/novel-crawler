@@ -1,5 +1,5 @@
 import { exportToEpub } from "../exporters/to-epub";
-import { getBook } from "../crawlers/truyenfull";
+import { getBook } from "../crawlers/metruyenchu";
 import { resolve } from "path";
 
 const book = await getBook({
